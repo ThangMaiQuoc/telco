@@ -68,8 +68,8 @@ const UploadForm = () => {
           <h2 className="mt-5 text-3xl font-bold text-gray-900">Get Your Bonus</h2>
           <p className="mt-2 text-sm text-gray-400">Charge 50P Get 50 Fee.</p>
         </div>
-        <form className="mt-8 space-y-3" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 space-y-2">
+        <form className="mt-8 space-y-3 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+          <div className=" space-y-2">
             <label className="text-sm font-bold text-gray-500 tracking-wide">Phone Number</label>
             <input
               value={phoneNumber}
@@ -81,7 +81,7 @@ const UploadForm = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 space-y-2">
+          <div className=" space-y-2">
             <label className="text-sm font-bold text-gray-500 tracking-wide">Attach Picture</label>
             <div className="flex items-center justify-center w-full">
               <label className="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center relative">
