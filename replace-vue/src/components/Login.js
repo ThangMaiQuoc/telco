@@ -3,16 +3,19 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiMail, FiLock } from 'react-icons/fi';
 import 'tailwindcss/tailwind.css';
+import { PulseLoader } from 'react-spinners'; // Import spinner từ react-spinners
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); // Thêm trạng thái loading
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Bắt đầu quá trình tải dữ liệu
     try {
-      const response = await axios.post('http://localhost:8099/api/v1/consumer/authenticate', {
+      const response = await axios.post('https://uploadimage-1002.onrender.com/api/v1/consumer/authenticate', {
         username: email,
         password: password,
       });
@@ -26,6 +29,8 @@ const Login = () => {
     } catch (error) {
       console.error('Login failed:', error);
       // Hiển thị thông báo lỗi nếu cần thiết
+    } finally {
+      setLoading(false); // Kết thúc quá trình tải dữ liệu
     }
   };
 
@@ -73,20 +78,24 @@ const Login = () => {
             <button
               type="submit"
               className="my-5 w-full flex justify-center bg-blue-500 text-gray-100 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-blue-600 shadow-lg cursor-pointer transition ease-in duration-300"
+              disabled={loading} // Vô hiệu hóa nút khi đang tải dữ liệu
             >
-              Login
+              {loading ? (
+                <PulseLoader size={10} color="#fff" /> // Hiển thị spinner khi đang tải dữ liệu
+              ) : (
+                'Login'
+              )}
             </button>
           </div>
           <div>
-          <button
-            onClick={handleAdminLogin}
-            className="my-5 w-full flex justify-center bg-red-500 text-gray-100 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-red-600 shadow-lg cursor-pointer transition ease-in duration-300 d-flex flex-column align-items-center"
-          >
-            Login as Admin
-          </button>
-        </div>
+            <button
+              onClick={handleAdminLogin}
+              className="my-5 w-full flex justify-center bg-red-500 text-gray-100 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-red-600 shadow-lg cursor-pointer transition ease-in duration-300 d-flex flex-column align-items-center"
+            >
+              Login as Admin
+            </button>
+          </div>
         </form>
-        
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ const AdminLogin = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8099/api/v1/admin/authenticate', {
+      const response = await axios.post('https://uploadimage-1002.onrender.com/api/v1/admin/authenticate', {
         username: email,
         password: password,
       });
