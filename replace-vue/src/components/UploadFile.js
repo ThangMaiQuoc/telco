@@ -61,8 +61,8 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
          onChange={onChange}
          onPreview={onPreview}
          maxCount={maxCount}
-         accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" // Accept multiple file types
-         showUploadList={{ showRemoveIcon: true }} // Show remove icon
+         accept=".jpg,.jpeg,.png" // Accept multiple file types
+         // showUploadList={{ showRemoveIcon: true }} // Show remove icon
          style={{ width: "300px" }}
       >
          {fileList.length < maxCount && (
@@ -75,8 +75,8 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
                      alt=""
                   />
                </p>
-               <p className="text-xl font-semibold mb-0">Choose a file or drag & drop it here</p>
-               <p className="text-gray-500">File type: doc, pdf, images</p>
+               <p className="text-xl font-bold mb-0 fw-bold">Choose a file or drag & drop it here</p>
+               <p className="text-gray-500">Supported formats: .jpeg, .jpg, .png</p>
                <Button className="mt-2 mx-5">Browse file</Button>
             </div>
          )}
