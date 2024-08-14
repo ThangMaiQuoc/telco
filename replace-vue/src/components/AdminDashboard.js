@@ -8,7 +8,7 @@ const AdminDashboard = () => {
     const fetchUploads = async () => {
       try {
         const token = localStorage.getItem('adminToken');
-        const response = await axios.get('https://uploadimage-1002.onrender.com/api/v1/admin/upload/information', {
+        const response = await axios.get('http://47.236.52.161:8099/api/v1/admin/upload/information', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -37,13 +37,13 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('adminToken');
       // Gửi yêu cầu PUT để thay đổi trạng thái
-      await axios.put(`https://uploadimage-1002.onrender.com/api/v1/admin/upload/${id}/APPROVED`, {}, {
+      await axios.put(`http://47.236.52.161:8099/api/v1/admin/upload/${id}/APPROVED`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       // Làm mới dữ liệu sau khi cập nhật
-      const response = await axios.get('https://uploadimage-1002.onrender.com/api/v1/admin/upload/information', {
+      const response = await axios.get('http://47.236.52.161:8099/api/v1/admin/upload/information', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -97,7 +97,7 @@ const AdminDashboard = () => {
                 <td className="py-4 px-4 text-gray-700 border-b border-gray-300">${upload.totalMoney}</td>
                 <td className="py-4 px-4 border-b border-gray-300">
                   <img
-                    src={`https://uploadimage-1002.onrender.com/api/v1/consumer/public/logo/${upload.image}`}
+                    src={`http://47.236.52.161:8099/api/v1/consumer/public/logo/${upload.image}`}
                     alt="Upload"
                     className="w-20 h-20 object-cover rounded-lg"
                   />

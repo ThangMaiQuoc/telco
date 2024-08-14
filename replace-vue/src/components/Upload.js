@@ -26,7 +26,7 @@ const UploadForm = () => {
     formData.append('file', selectedFile);
 
     try {
-      const uploadResponse = await axios.post('https://uploadimage-1002.onrender.com/api/v1/consumer/upload', formData, {
+      const uploadResponse = await axios.post('http://47.236.52.161:8099/api/v1/consumer/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -37,7 +37,7 @@ const UploadForm = () => {
         const uploadedImagePath = uploadResponse.data.path;
         console.log('Image uploaded:', uploadedImagePath);
 
-        const imageBonusResponse = await axios.post('https://uploadimage-1002.onrender.com/api/v1/consumer/upload/image-bonus', {
+        const imageBonusResponse = await axios.post('http://47.236.52.161:8099/api/v1/consumer/upload/image-bonus', {
           phone: phoneNumber,
           image: uploadedImagePath,
         }, {
