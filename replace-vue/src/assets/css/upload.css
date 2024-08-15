@@ -1,0 +1,14 @@
+.tablet-pc_screens .ant-upload.ant-upload-select {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.tablet-pc_screens .ant-upload-list-item.ant-upload-list-item-done {
+  width: 400px !important;
+  min-height: 400px !important;
+}
+
+.tablet-pc_screens .ant-upload-list-item-container {
+  width: 400px !important;
+  min-height: 400px !important;
+}
