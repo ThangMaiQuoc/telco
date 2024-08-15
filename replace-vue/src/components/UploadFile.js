@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Upload, message } from "antd";
-// import { CloudUploadOutlined } from "@ant-design/icons";
+import { CloudUploadOutlined } from "@ant-design/icons";
 import "tailwindcss/tailwind.css";
+import "../assets/css/upload.css";
 
 const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
    const onChange = ({ fileList: newFileList }) => {
@@ -54,33 +55,67 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
    };
 
    return (
-      <Upload
-         customRequest={customUpload}
-         listType="picture-card"
-         fileList={fileList}
-         onChange={onChange}
-         onPreview={onPreview}
-         maxCount={maxCount}
-         accept=".jpg,.jpeg,.png" // Accept multiple file types
-         // showUploadList={{ showRemoveIcon: true }} // Show remove icon
-         style={{ width: "300px" }}
-      >
-         {fileList.length < maxCount && (
-            <div className="d-flex justify-center items-center flex-column">
-               <p>
-                  {/* <CloudUploadOutlined style={{ fontSize: "50px" }} /> */}
-                  <img
-                     className="has-mask h-10 object-center"
-                     src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
-                     alt=""
-                  />
-               </p>
-               <p className="text-xl font-bold mb-0 fw-bold">Choose a file or drag & drop it here</p>
-               <p className="text-gray-500">Supported formats: .jpeg, .jpg, .png</p>
-               <Button className="mt-2 mx-5">Browse file</Button>
-            </div>
-         )}
-      </Upload>
+      <>
+         <div className="mobile d-block d-lg-none">
+            <Upload
+               customRequest={customUpload}
+               listType="picture-card"
+               fileList={fileList}
+               onChange={onChange}
+               onPreview={onPreview}
+               maxCount={maxCount}
+               accept=".jpg,.jpeg,.png"
+            >
+               {fileList.length < maxCount && (
+                  <div className="d-flex justify-center items-center flex-column">
+                     <p>
+                        <img
+                           className="has-mask h-10 object-center"
+                           src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
+                           alt=""
+                        />
+                     </p>
+                     <p className="text-xl font-bold mb-0 fw-bold">Choose a file or drag & drop it here</p>
+                     <p className="text-gray-500">Supported formats: .jpeg, .jpg, .png</p>
+                     <Button className="mt-2 mx-5">Browse file</Button>
+                  </div>
+               )}
+            </Upload>
+         </div>
+         <div className="tablet-pc_screens d-none d-lg-block">
+            <Upload
+               customRequest={customUpload}
+               listType="picture-card"
+               fileList={fileList}
+               onChange={onChange}
+               onPreview={onPreview}
+               maxCount={maxCount}
+               accept=".jpg,.jpeg,.png"
+            >
+               {fileList.length < maxCount && (
+                  <div className="d-flex justify-center items-center">
+                     <img
+                        className="w-100 has-mask h-100 object-center"
+                        src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
+                        alt=""
+                        style={{ minHeight: "400px", minWidth: "400px" }}
+                     />
+                     <div
+                        className="d-flex justify-center justify-content-center items-center flex-column"
+                        style={{ minHeight: "400px", minWidth: "400px" }}
+                     >
+                        <p>
+                           <CloudUploadOutlined style={{ fontSize: "50px" }} />
+                        </p>
+                        <p className="text-xl h5 mb-1 fw-bold">Choose a file or drag & drop it here</p>
+                        <p className="text-gray-500 text-body-secondary">Supported formats: .JPEG, .JPG, .PNG</p>
+                        <Button className="mt-2 mx-5">Browse file</Button>
+                     </div>
+                  </div>
+               )}
+            </Upload>
+         </div>
+      </>
    );
 };
 
