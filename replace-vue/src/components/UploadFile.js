@@ -34,10 +34,10 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
          const response = await fetch("http://47.236.52.161:8099/api/v1/consumer/upload", {
             method: "POST",
             body: formData,
-            headers: {
-               // "Content-Type": "multipart/form-data", // Commented out since fetch handles this automatically
-               Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+            // headers: {
+            //    // "Content-Type": "multipart/form-data", // Commented out since fetch handles this automatically
+            //    Authorization: `Bearer ${localStorage.getItem("token")}`,
+            // },
          });
 
          if (response.ok) {
