@@ -4,7 +4,7 @@ import "tailwindcss/tailwind.css";
 import UploadBasic from "./UploadFile";
 import { Button, Form, Input, message } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { PhoneFilled } from "@ant-design/icons";
+import { PhoneFilled, UserOutlined } from "@ant-design/icons";
 
 const UploadForm = () => {
    const [fileList, setFileList] = useState([]);
@@ -20,19 +20,26 @@ const UploadForm = () => {
       }
       try {
          if (fileList && fileList) {
-            const uploadedImagePath = fileList[0].response.path.split("/").pop();
-            // console.log("Image uploaded:", uploadedImagePath);
+            // const uploadedImagePath = fileList[0].response.path.split("/").pop();
+
+            const uploadedImagePath = fileList
+               .map((item) => {
+                  const path = item.response.path;
+                  return path.split("/").pop(); // Lấy phần cuối của đường dẫn
+               })
+               .join(",");
 
             const imageBonusResponse = await axios.post(
                "http://47.236.52.161:8099/api/v1/consumer/upload/image-bonus",
                {
                   phone: values.phoneNumber,
                   image: uploadedImagePath,
+                  userName: values.userName,
                },
                {
-                  headers: {
-                     Authorization: `Bearer ${localStorage.getItem("token")}`,
-                  },
+                  // headers: {
+                  //    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  // },
                }
             );
 
@@ -40,7 +47,7 @@ const UploadForm = () => {
                // alert("Bonus image uploaded successfully!");
                message.success("Bonus image uploaded successfully!");
 
-               window.location.reload(); // Refresh lại trang
+               // window.location.reload(); // Refresh lại trang
             } else {
                // alert("Bonus image upload failed.");
                message.error("Bonus image upload failed.");
@@ -68,90 +75,60 @@ const UploadForm = () => {
                <p className="mt-2 text-sm text-gray-400">Charge 50P Get 50 Fee.</p>
             </div>
             <Form form={form} onFinish={handleSubmit} className="mt-3  d-flex flex-column align-items-center">
-               {/* <div className="">
-                  <label className="text-sm font-bold text-gray-500 tracking-wide">Phone Number: </label>
-                  <input
-                     value={phoneNumber}
-                     onChange={(e) => setPhoneNumber(e.target.value)}
-                     className="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
-                     type="tel"
-                     placeholder="Enter your phone number"
-                     required
-                  />
-               </div> */}
-               <Form.Item
-                  name="phoneNumber"
-                  // label="Phone Number"
-                  rules={[
-                     {
-                        required: true,
-                        message: "Please enter your phone number!",
-                     },
-                     // {
-                     //    pattern: /^09\d{9}$|^0\d{2}\d{7}$|^0\d{1}\d{7}$/,
-                     //    message: "Please enter a valid phone number!",
-                     // },
-                  ]}
-               >
-                  {/* <label className="text-sm font-bold text-gray-500 tracking-wide">Phone Number: </label> <br /> */}
-                  <Input
-                     prefix={<PhoneFilled />}
-                     style={{ width: "300px" }}
-                     size="large"
-                     placeholder="Enter your phone number"
-                  />
-               </Form.Item>
+               <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-4 mb-3">
+                  <Form.Item
+                     className="mb-0"
+                     name="phoneNumber"
+                     // label="Phone Number"
+                     rules={[
+                        {
+                           required: true,
+                           message: "Please enter your phone number!",
+                        },
+                        // {
+                        //    pattern: /^09\d{9}$|^0\d{2}\d{7}$|^0\d{1}\d{7}$/,
+                        //    message: "Please enter a valid phone number!",
+                        // },
+                     ]}
+                  >
+                     {/* <label className="text-sm font-bold text-gray-500 tracking-wide">Phone Number: </label> <br /> */}
+                     <Input
+                        prefix={<PhoneFilled />}
+                        style={{ width: "300px" }}
+                        size="large"
+                        placeholder="Enter your phone number"
+                     />
+                  </Form.Item>
 
-               {/* <div className=" space-y-2">
-                  <label className="text-sm font-bold text-gray-500 tracking-wide">Attach Picture</label>
-                  <div className="flex items-center justify-center w-full">
-                     <label className="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center relative">
-                        <div className="h-full w-full text-center flex flex-col items-center justify-center">
-                           {previewImage ? (
-                              <img
-                                 src={previewImage}
-                                 className="absolute inset-0 w-full h-full object-contain"
-                                 alt=""
-                              />
-                           ) : (
-                              <div className="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
-                                 <img
-                                    className="has-mask h-36 object-center"
-                                    src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
-                                    alt=""
-                                 />
-                              </div>
-                           )}
-                           {!previewImage && (
-                              <p className="pointer-none text-gray-500">
-                                 <span className="text-sm">Drag and drop</span> files here <br /> or{" "}
-                                 <a
-                                    href="/"
-                                    className="text-blue-600 hover:underline"
-                                    onClick={(e) => {
-                                       e.preventDefault();
-                                       selectFile();
-                                    }}
-                                 >
-                                    select a file
-                                 </a>{" "}
-                                 from your computer
-                              </p>
-                           )}
-                        </div>
-                        <input type="file" id="file-upload" className="hidden" onChange={handleFileUpload} />
-                     </label>
-                  </div>
+                  <Form.Item
+                     name="userName"
+                     className="mb-0"
+                     // label="Phone Number"
+                     rules={[
+                        {
+                           required: true,
+                           message: "Please enter your username!",
+                        },
+                        // {
+                        //    pattern: /^09\d{9}$|^0\d{2}\d{7}$|^0\d{1}\d{7}$/,
+                        //    message: "Please enter a valid phone number!",
+                        // },
+                     ]}
+                  >
+                     {/* <label className="text-sm font-bold text-gray-500 tracking-wide">Phone Number: </label> <br /> */}
+                     <Input
+                        prefix={<UserOutlined />}
+                        style={{ width: "300px" }}
+                        size="large"
+                        placeholder="Enter your username"
+                     />
+                  </Form.Item>
                </div>
-
-               <p className="text-sm text-gray-300">
-                  <span>File type: doc, pdf, types of images</span>
-               </p> */}
 
                <div className="upload-basic">
                   <UploadBasic setFileList={setFileList} fileList={fileList} />
                </div>
-               {isUpload && <p style={{ colo: "red" }}>Please choose picture</p>}
+               {isUpload && <p style={{ color: "red" }}>Please choose picture</p>}
                <div>
                   <Button
                      onClick={() => form.submit()}
