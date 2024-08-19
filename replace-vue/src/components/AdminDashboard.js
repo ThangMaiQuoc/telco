@@ -24,16 +24,38 @@ const AdminDashboard = () => {
       fetchUploads();
    }, []);
 
-   //  const getStatusClass = (status) => {
-   //     switch (status) {
-   //        case "WAITING_FOR_APPROVED":
-   //           return "bg-yellow-400 text-yellow-800";
-   //        case "APPROVED":
-   //           return "bg-green-500 text-black";
-   //        default:
-   //           return "bg-gray-300 text-gray-800";
-   //     }
-   //  };
+   const getStatusClass = (status) => {
+      switch (status) {
+         case "WAITING_FOR_APPROVED":
+            // return "text-warning bg-warning-subtle";
+            return (
+               <div
+                  className={`text-warning bg-warning-subtle d-inline px-2 py-1 rounded fw-semibold `}
+                  style={{ fontSize: "12px" }}
+               >
+                  {/* WAITING FOR APPROVED */} PENDING
+               </div>
+            );
+         case "APPROVED":
+            return (
+               <div
+                  className={`text-success bg-success-subtle d-inline px-2 py-1 rounded fw-semibold `}
+                  style={{ fontSize: "12px" }}
+               >
+                  APPROVED
+               </div>
+            );
+         default:
+            return (
+               <div
+                  className={`text-success bg-success-subtle d-inline px-2 py-1 rounded fw-semibold `}
+                  style={{ fontSize: "12px" }}
+               >
+                  APPROVED
+               </div>
+            );
+      }
+   };
 
    const handleApprove = async (id) => {
       try {
@@ -90,6 +112,7 @@ const AdminDashboard = () => {
          title: "ID",
          width: 50,
          dataIndex: "index",
+         align: "center",
          key: "index",
          render: (_text, _record, index) => {
             return index + 1;
@@ -100,6 +123,7 @@ const AdminDashboard = () => {
          width: 100,
          dataIndex: "phone",
          key: "phone",
+         // align: "center",
          // fixed: "left",
          filterSearch: true,
       },
@@ -108,6 +132,7 @@ const AdminDashboard = () => {
          width: 120,
          dataIndex: "totalMoney",
          key: "totalMoney",
+         align: "center",
          // fixed: "left",
          filterSearch: true,
       },
@@ -116,6 +141,7 @@ const AdminDashboard = () => {
          width: 100,
          dataIndex: "imageTitle",
          key: "imageTitle",
+         align: "center",
          render: (_text, record, _index) => {
             const imageArray = record.image.split(",");
             return (
@@ -129,8 +155,8 @@ const AdminDashboard = () => {
                <Image.PreviewGroup>
                   {/* Hình ảnh đầu tiên đại diện */}
                   <Image
-                     width={100}
-                     height={100}
+                     width={80}
+                     height={80}
                      src={`http://47.236.52.161:8099/api/v1/consumer/public/logo/${imageArray[0]}`}
                      alt="Hình ảnh đại diện"
                      className="w-20 h-20 object-cover rounded-lg"
@@ -155,10 +181,14 @@ const AdminDashboard = () => {
       {
          title: "Username",
          width: 100,
-         dataIndex: "username",
-         key: "username",
+         dataIndex: "userName",
+         key: "userName",
+         align: "center",
          // fixed: "left",
          filterSearch: true,
+         render: (text, _record, _index) => {
+            return <>{text ? text : "N/A"}</>;
+         },
       },
       {
          title: "Status",
@@ -166,7 +196,11 @@ const AdminDashboard = () => {
          dataIndex: "status",
          key: "status",
          // fixed: "left",
+         align: "center",
          filterSearch: true,
+         render: (text, _record, _index) => {
+            return getStatusClass(text);
+         },
       },
 
       {
@@ -188,7 +222,13 @@ const AdminDashboard = () => {
                   </div>
                ) : (
                   <div className="flex space-x-2 bg-green-500">
-                     <Button type="text" danger onClick={() => handleUnApprove(record.id)} style={{ fontWeight: 600 }}>
+                     <Button
+                        // className="text-warning"
+                        type="text"
+                        danger
+                        onClick={() => handleUnApprove(record.id)}
+                        style={{ fontWeight: 600 }}
+                     >
                         Disapprove
                      </Button>
                   </div>
