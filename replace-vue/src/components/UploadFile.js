@@ -4,7 +4,7 @@ import { CloudUploadOutlined } from "@ant-design/icons";
 import "tailwindcss/tailwind.css";
 import "../assets/css/upload.css";
 
-const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
+const UploadBasic = ({ fileList, setFileList, maxCount = 100 }) => {
    const onChange = ({ fileList: newFileList }) => {
       setFileList(newFileList);
    };
@@ -56,7 +56,11 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
 
    return (
       <>
-         <div className="mobile d-block d-lg-none">
+         <div
+            className={`mobile ${
+               fileList.length < maxCount && fileList.length !== 0 && "multiple-img"
+            } d-block d-lg-none`}
+         >
             <Upload
                customRequest={customUpload}
                listType="picture-card"
@@ -64,9 +68,20 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
                onChange={onChange}
                onPreview={onPreview}
                maxCount={maxCount}
-               accept=".jpg,.jpeg,.png"
+               accept="image/*"
+               multiple={true}
             >
-               {fileList.length < maxCount && (
+               {fileList.length < maxCount && fileList.length !== 0 && (
+                  <div className="d-flex justify-center items-center flex-column">
+                     <p className="mb-1">
+                        <CloudUploadOutlined style={{ fontSize: "30px" }} />
+                     </p>
+                     <p className="fw-bold mb-1">Choose a file or drag & drop it here</p>
+                     <Button className="mx-3 px-1">Browse file</Button>
+                  </div>
+               )}
+
+               {fileList.length < maxCount && fileList.length === 0 && (
                   <div className="d-flex justify-center items-center flex-column">
                      <p>
                         <img
@@ -82,7 +97,11 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
                )}
             </Upload>
          </div>
-         <div className="tablet-pc_screens d-none d-lg-block">
+         <div
+            className={`tablet-pc_screens ${
+               fileList.length < maxCount && fileList.length !== 0 && "multiple-img"
+            }  d-none d-lg-block`}
+         >
             <Upload
                customRequest={customUpload}
                listType="picture-card"
@@ -90,9 +109,19 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 1 }) => {
                onChange={onChange}
                onPreview={onPreview}
                maxCount={maxCount}
-               accept=".jpg,.jpeg,.png"
+               accept="image/*"
+               multiple={true}
             >
-               {fileList.length < maxCount && (
+               {fileList.length < maxCount && fileList.length !== 0 && (
+                  <div className="d-flex justify-center items-center flex-column">
+                     <p className="mb-1">
+                        <CloudUploadOutlined style={{ fontSize: "30px" }} />
+                     </p>
+                     <p className="fw-bold mb-1">Choose a file or drag & drop it here</p>
+                     <Button className="mx-4 px-1">Browse file</Button>
+                  </div>
+               )}
+               {fileList.length < maxCount && fileList.length === 0 && (
                   <div className="d-flex justify-center items-center">
                      <img
                         className="w-100 has-mask h-100 object-center"
