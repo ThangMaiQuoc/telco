@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // import { FiMail, FiLock } from "react-icons/fi";
 import "tailwindcss/tailwind.css";
-import { Card, Form, Input } from "antd";
+import { Card, Form, Input, message } from "antd";
 import { MailFilled, LockFilled, EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 
 const AdminLogin = () => {
@@ -28,6 +28,7 @@ const AdminLogin = () => {
          }
       } catch (error) {
          console.error("Admin login failed:", error);
+         message.error("An error occurred. Please try again later!");
          // Display error message if necessary
       }
    };

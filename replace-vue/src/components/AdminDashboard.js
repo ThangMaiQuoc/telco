@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TableData from "./TableData";
-import { Button, Image } from "antd";
+import { Button, Image, Spin, message } from "antd";
 
 const AdminDashboard = () => {
    const [uploads, setUploads] = useState([]);
+   const [spin, setSpin] = useState(false);
 
    useEffect(() => {
       const fetchUploads = async () => {
+         setSpin(true);
          try {
             const token = localStorage.getItem("adminToken");
             const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
@@ -16,7 +18,10 @@ const AdminDashboard = () => {
                },
             });
             setUploads(response.data);
+            setSpin(false);
          } catch (error) {
+            setSpin(false);
+            message.error("An error occurred. Please try again later!");
             console.error("Error fetching upload information:", error);
          }
       };
@@ -71,14 +76,18 @@ const AdminDashboard = () => {
             }
          );
          // Làm mới dữ liệu sau khi cập nhật
-         const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information", {
+         const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
          setUploads(response.data);
+         setSpin(false);
+         message.success("Approved successfully!");
       } catch (error) {
          console.error("Error approving upload:", error);
+         message.error("An error occurred. Please try again later!");
+         setSpin(false);
       }
    };
 
@@ -102,8 +111,12 @@ const AdminDashboard = () => {
             },
          });
          setUploads(response.data);
+         message.success("Disapproved successfully!");
+         setSpin(false);
       } catch (error) {
          console.error("Error approving upload:", error);
+         message.error("An error occurred. Please try again later!");
+         setSpin(false);
       }
    };
 
@@ -214,7 +227,10 @@ const AdminDashboard = () => {
                   <div className="flex space-x-2">
                      <Button
                         type="text"
-                        onClick={() => handleApprove(record.id)}
+                        onClick={() => {
+                           setSpin(true);
+                           handleApprove(record.id);
+                        }}
                         style={{ color: "#22c55e", fontWeight: 600 }}
                      >
                         Approve
@@ -226,7 +242,10 @@ const AdminDashboard = () => {
                         // className="text-warning"
                         type="text"
                         danger
-                        onClick={() => handleUnApprove(record.id)}
+                        onClick={() => {
+                           setSpin(true);
+                           handleUnApprove(record.id);
+                        }}
                         style={{ fontWeight: 600 }}
                      >
                         Disapprove
@@ -261,7 +280,9 @@ const AdminDashboard = () => {
       <div className="container mx-auto p-6">
          <h2 className="text-3xl font-bold text-gray-800 mb-6">Admin Dashboard</h2>
          <div className="bg-white shadow-md rounded-lg overflow-hidden">
-            <TableData data={uploads} columns={columns} scrollX={700} />
+            <Spin spinning={spin}>
+               <TableData data={uploads} columns={columns} scrollX={700} />
+            </Spin>
          </div>
       </div>
    );
