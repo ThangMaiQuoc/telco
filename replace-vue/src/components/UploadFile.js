@@ -127,7 +127,7 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 100 }) => {
                         className="w-100 has-mask h-100 object-center"
                         src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
                         alt=""
-                        style={{ minHeight: "400px", minWidth: "400px" }}
+                        style={{ minHeight: "400px", minWidth: "400px", width: "100%" }}
                      />
                      <div
                         className="d-flex justify-center justify-content-center items-center flex-column"
