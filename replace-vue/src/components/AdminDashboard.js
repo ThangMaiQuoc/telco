@@ -31,14 +31,14 @@ const AdminDashboard = () => {
 
    const getStatusClass = (status) => {
       switch (status) {
-         case "WAITING_FOR_APPROVED":
+         case "REJECTED":
             // return "text-warning bg-warning-subtle";
             return (
                <div
-                  className={`text-warning bg-warning-subtle d-inline px-2 py-1 rounded fw-semibold `}
+                  className={`text-danger bg-danger-subtle d-inline px-2 py-1 rounded fw-semibold `}
                   style={{ fontSize: "12px" }}
                >
-                  {/* WAITING FOR APPROVED */} PENDING
+                  {/* WAITING FOR APPROVED */} REJECTED
                </div>
             );
          case "APPROVED":
@@ -49,6 +49,52 @@ const AdminDashboard = () => {
                >
                   APPROVED
                </div>
+            );
+         case "WAITING_FOR_REVIEWER_APPROVED":
+         case "WAITING_FOR_REVIEWER_REJECT":
+            return (
+               <div
+                  className={`text-warning bg-warning-subtle d-inline px-2 py-1 rounded fw-semibold `}
+                  style={{ fontSize: "12px" }}
+               >
+                  PENDING REVIEWER
+               </div>
+            );
+         case "REVIEWER_APPROVED_ADMIN_REJECTED":
+            return (
+               <>
+                  <div
+                     className={`text-secondary bg-secondary-subtle d-inline px-2 py-1 rounded fw-semibold mb-1`}
+                     style={{ fontSize: "12px" }}
+                  >
+                     ADMIN REJECTED
+                  </div>
+                  <br />
+                  <div
+                     className={`text-secondary bg-secondary-subtle d-inline px-2 py-1 rounded fw-semibold `}
+                     style={{ fontSize: "12px" }}
+                  >
+                     REVIEWER APPROVED
+                  </div>
+               </>
+            );
+         case "REVIEWER_REJECTED_ADMIN_APPROVED":
+            return (
+               <>
+                  <div
+                     className={`text-secondary bg-secondary-subtle d-inline px-2 py-1 rounded fw-semibold mb-1`}
+                     style={{ fontSize: "12px" }}
+                  >
+                     ADMIN APPROVED
+                  </div>
+                  <br />
+                  <div
+                     className={`text-secondary bg-secondary-subtle d-inline px-2 py-1 rounded fw-semibold `}
+                     style={{ fontSize: "12px" }}
+                  >
+                     REVIEWER REJECTED
+                  </div>
+               </>
             );
          default:
             return (
@@ -62,12 +108,12 @@ const AdminDashboard = () => {
       }
    };
 
-   const handleApprove = async (id) => {
+   const handleChangeStatusAdmin = async (id, status) => {
       try {
          const token = localStorage.getItem("adminToken");
          // Gửi yêu cầu PUT để thay đổi trạng thái
          await axios.put(
-            `http://47.236.52.161:8099/api/v1/admin/upload/${id}/APPROVED`,
+            `http://47.236.52.161:8099/api/v1/admin/upload/${id}/${status}`,
             {},
             {
                headers: {
@@ -82,8 +128,8 @@ const AdminDashboard = () => {
             },
          });
          setUploads(response.data);
+         message.success("Successfully!");
          setSpin(false);
-         message.success("Approved successfully!");
       } catch (error) {
          console.error("Error approving upload:", error);
          message.error("An error occurred. Please try again later!");
@@ -91,12 +137,12 @@ const AdminDashboard = () => {
       }
    };
 
-   const handleUnApprove = async (id) => {
+   const handleChangeStatusReviewer = async (id, status) => {
       try {
          const token = localStorage.getItem("adminToken");
          // Gửi yêu cầu PUT để thay đổi trạng thái
          await axios.put(
-            `http://47.236.52.161:8099/api/v1/admin/upload/${id}/WAITING_FOR_APPROVED`,
+            `http://47.236.52.161:8099/api/v1/admin/upload/review/${id}/${status}`,
             {},
             {
                headers: {
@@ -105,13 +151,13 @@ const AdminDashboard = () => {
             }
          );
          // Làm mới dữ liệu sau khi cập nhật
-         const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information", {
+         const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
          setUploads(response.data);
-         message.success("Disapproved successfully!");
+         message.success("Successfully!");
          setSpin(false);
       } catch (error) {
          console.error("Error approving upload:", error);
@@ -120,15 +166,23 @@ const AdminDashboard = () => {
       }
    };
 
+   const handleChange = (id, status, adminAStatus) => {
+      if (adminAStatus !== null) {
+         handleChangeStatusReviewer(id, status);
+      } else {
+         handleChangeStatusAdmin(id, status);
+      }
+   };
+
    const columns = [
       {
          title: "ID",
          width: 50,
-         dataIndex: "index",
+         dataIndex: "id",
          align: "center",
          key: "index",
-         render: (_text, _record, index) => {
-            return index + 1;
+         render: (text, _record, _index) => {
+            return text;
          },
       },
       {
@@ -221,39 +275,48 @@ const AdminDashboard = () => {
          key: "operation",
          // fixed: "right",
          width: 100,
-         render: (_text, record, _index) => (
-            <>
-               {record.status === "WAITING_FOR_APPROVED" ? (
-                  <div className="flex space-x-2">
-                     <Button
-                        type="text"
-                        onClick={() => {
-                           setSpin(true);
-                           handleApprove(record.id);
-                        }}
-                        style={{ color: "#22c55e", fontWeight: 600 }}
-                     >
-                        Approve
-                     </Button>
-                  </div>
-               ) : (
-                  <div className="flex space-x-2 bg-green-500">
-                     <Button
-                        // className="text-warning"
-                        type="text"
-                        danger
-                        onClick={() => {
-                           setSpin(true);
-                           handleUnApprove(record.id);
-                        }}
-                        style={{ fontWeight: 600 }}
-                     >
-                        Disapprove
-                     </Button>
-                  </div>
-               )}
-            </>
-         ),
+         render: (_text, record, _index) => {
+            return (
+               <>
+                  {record.status === "APPROVED" ||
+                  record.status === "REJECTED" ||
+                  (record.status === "WAITING_FOR_REVIEWER_APPROVED" && record.adminAStatus !== "ADMIN_APPROVED") ||
+                  (record.status === "WAITING_FOR_REVIEWER_REJECT" && record.adminAStatus !== "ADMIN_REJECT") ? (
+                     ""
+                  ) : (
+                     <>
+                        <div className="flex space-x-2">
+                           <Button
+                              type="text"
+                              onClick={() => {
+                                 setSpin(true);
+                                 handleChange(record.id, "APPROVED", record.adminAStatus);
+                              }}
+                              style={{ color: "#22c55e", fontWeight: 600 }}
+                           >
+                              Approve
+                           </Button>
+                        </div>
+
+                        <div className="flex space-x-2 bg-green-500">
+                           <Button
+                              // className="text-warning"
+                              type="text"
+                              danger
+                              onClick={() => {
+                                 setSpin(true);
+                                 handleChange(record.id, "REJECTED", record.adminAStatus);
+                              }}
+                              style={{ fontWeight: 600 }}
+                           >
+                              Reject
+                           </Button>
+                        </div>
+                     </>
+                  )}
+               </>
+            );
+         },
       },
    ];
 
