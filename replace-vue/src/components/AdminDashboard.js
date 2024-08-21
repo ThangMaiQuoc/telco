@@ -212,20 +212,13 @@ const AdminDashboard = () => {
          render: (_text, record, _index) => {
             const imageArray = record.image.split(",");
             return (
-               // <Image
-               //    width={100}
-               //    height={100}
-               //    src={`http://47.236.52.161:8099/api/v1/consumer/public/logo/${record.image}`}
-               //    alt="Hình ảnh"
-               //    className="w-20 h-20 object-cover rounded-lg"
-               // />
                <Image.PreviewGroup>
                   {/* Hình ảnh đầu tiên đại diện */}
                   <Image
                      width={80}
                      height={80}
                      src={`http://47.236.52.161:8099/api/v1/consumer/public/logo/${imageArray[0]}`}
-                     alt="Hình ảnh đại diện"
+                     alt="Image title"
                      className="w-20 h-20 object-cover rounded-lg"
                   />
                   {/* Các hình ảnh khác trong preview group (ẩn, chỉ sử dụng khi preview) */}
