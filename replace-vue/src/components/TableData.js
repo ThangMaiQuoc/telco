@@ -3,12 +3,11 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 
 const TableData = ({ columns, data, scrollX, selected = false }) => {
-   const [searchText, setSearchText] = useState("");
+   const [_, setSearchText] = useState("");
    // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-   console.log(searchText);
    const searchInput = useRef(null);
 
-   const handleSearch = (selectedKeys, confirm, dataIndex) => {
+   const handleSearch = (selectedKeys, confirm, _dataIndex) => {
       confirm();
       setSearchText(selectedKeys[0]);
    };

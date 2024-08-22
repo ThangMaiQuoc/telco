@@ -23,12 +23,12 @@ const AdminLogin = () => {
          if (response.data) {
             const { token } = response.data;
             localStorage.setItem("adminToken", token); // Save admin token to localStorage
-            console.log("Admin login successful:", response.data);
+            // console.log("Admin login successful:", response.data);
             navigate("/admin/dashboard"); // Navigate to admin dashboard
          }
       } catch (error) {
-         console.error("Admin login failed:", error);
-         message.error("An error occurred. Please try again later!");
+         // console.error("Admin login failed:", error);
+         message.error("An error occurred. Please try again later!", 5);
          // Display error message if necessary
       }
    };
