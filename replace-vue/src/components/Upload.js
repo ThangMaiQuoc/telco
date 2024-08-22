@@ -20,8 +20,6 @@ const UploadForm = () => {
       }
       try {
          if (fileList && fileList) {
-            // const uploadedImagePath = fileList[0].response.path.split("/").pop();
-
             const uploadedImagePath = fileList
                .map((item) => {
                   const path = item.response.path;
@@ -36,30 +34,31 @@ const UploadForm = () => {
                   image: uploadedImagePath,
                   userName: values.userName,
                },
-               {
-                  // headers: {
-                  //    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                  // },
-               }
+               {}
             );
 
             if (imageBonusResponse.data) {
                // alert("Bonus image uploaded successfully!");
-               message.success("Bonus image uploaded successfully!");
+               message.success("Bonus image uploaded successfully!", 3);
 
-               // window.location.reload(); // Refresh lại trang
+               setTimeout(() => {
+                  window.location.reload();
+               }, 3000);
             } else {
                // alert("Bonus image upload failed.");
-               message.error("Bonus image upload failed.");
+               message.error("Bonus image upload failed.", 5);
             }
          } else {
             // alert("Image upload failed.");
-            message.error("Image upload failed.");
+            message.error("Image upload failed.", 5);
          }
       } catch (error) {
-         console.error("Upload failed:", error);
+         // console.error("Upload failed:", error?.response?.data?.title);
          // alert("Upload failed.");
-         message.error("Upload failed.");
+         message.error(
+            error?.response?.data?.title === "Unknown_mobile" ? "Unknown phone number" : "Username already exists",
+            5
+         );
       }
    };
 
@@ -85,13 +84,8 @@ const UploadForm = () => {
                            required: true,
                            message: "Please enter your phone number!",
                         },
-                        // {
-                        //    pattern: /^09\d{9}$|^0\d{2}\d{7}$|^0\d{1}\d{7}$/,
-                        //    message: "Please enter a valid phone number!",
-                        // },
                      ]}
                   >
-                     {/* <label className="text-sm font-bold text-gray-500 tracking-wide">Phone Number: </label> <br /> */}
                      <Input
                         prefix={<PhoneFilled />}
                         style={{ width: "300px" }}
@@ -109,13 +103,8 @@ const UploadForm = () => {
                            required: true,
                            message: "Please enter your username!",
                         },
-                        // {
-                        //    pattern: /^09\d{9}$|^0\d{2}\d{7}$|^0\d{1}\d{7}$/,
-                        //    message: "Please enter a valid phone number!",
-                        // },
                      ]}
                   >
-                     {/* <label className="text-sm font-bold text-gray-500 tracking-wide">Phone Number: </label> <br /> */}
                      <Input
                         prefix={<UserOutlined />}
                         style={{ width: "300px" }}
