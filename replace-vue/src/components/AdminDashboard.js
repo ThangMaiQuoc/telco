@@ -22,7 +22,7 @@ const AdminDashboard = () => {
          } catch (error) {
             setSpin(false);
             message.error("An error occurred. Please try again later!");
-            console.error("Error fetching upload information:", error);
+            // console.error("Error fetching upload information:", error);
          }
       };
 
@@ -131,8 +131,8 @@ const AdminDashboard = () => {
          message.success("Successfully!");
          setSpin(false);
       } catch (error) {
-         console.error("Error approving upload:", error);
-         message.error("An error occurred. Please try again later!");
+         // console.error("Error approving upload:", error);
+         message.error("An error occurred. Please try again later!", 3);
          setSpin(false);
       }
    };
@@ -157,11 +157,11 @@ const AdminDashboard = () => {
             },
          });
          setUploads(response.data);
-         message.success("Successfully!");
+         message.success("Successfully!", 3);
          setSpin(false);
       } catch (error) {
-         console.error("Error approving upload:", error);
-         message.error("An error occurred. Please try again later!");
+         // console.error("Error approving upload:", error);
+         message.error("An error occurred. Please try again later!", 3);
          setSpin(false);
       }
    };
@@ -312,25 +312,6 @@ const AdminDashboard = () => {
          },
       },
    ];
-
-   // const handleReject = async (id) => {
-   //   try {
-   //     const token = localStorage.getItem('adminToken');
-   //     await axios.post(`http://localhost:8099/api/v1/admin/upload/reject/${id}`, {}, {
-   //       headers: {
-   //         Authorization: `Bearer ${token}`
-   //       }
-   //     });
-   //     const response = await axios.get('http://localhost:8099/api/v1/admin/upload/information', {
-   //       headers: {
-   //         Authorization: `Bearer ${token}`
-   //       }
-   //     });
-   //     setUploads(response.data);
-   //   } catch (error) {
-   //     console.error('Error rejecting upload:', error);
-   //   }
-   // };
 
    return (
       <div className="container mx-auto p-6">
