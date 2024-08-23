@@ -56,7 +56,11 @@ const UploadForm = () => {
          // console.error("Upload failed:", error?.response?.data?.title);
          // alert("Upload failed.");
          message.error(
-            error?.response?.data?.title === "Unknown_mobile" ? "Unknown phone number" : "Username already exists",
+            error?.response?.data?.title === "Unknown_mobile"
+               ? "Unknown phone number"
+               : error?.response?.data?.title === "NO_IMAGE"
+               ? "No image uploaded"
+               : "Username already exists",
             5
          );
       }
