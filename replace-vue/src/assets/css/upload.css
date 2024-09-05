@@ -1,3 +1,7 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 .upload-basic .mobile .ant-upload-wrapper {
   width: 300px;
   min-height: 300px;
@@ -81,4 +85,266 @@
 .tablet-pc_screens.multiple-img .ant-upload-list-picture-card {
   display: flex;
   justify-content: center;
+}
+
+/* ------------------------- */
+.home-background {
+  background-color: #074691;
+  height: 100vh;
+  position: relative;
+  border: none !important;
+}
+
+.bg-path {
+  background-image: url('./../../../public/bg-path.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-size: cover;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bg-cloud {
+  background-image: url('./../../../public/bg-cloud.png');
+  background-position: bottom;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-size: contain;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: none;
+}
+
+.content-banner {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 100px 80px;
+
+}
+
+.text-banner h1,
+.text-banner h2 {
+  font-family: 'Poppins';
+  font-size: 100px;
+}
+
+.text-banner h2 {
+  color: #ffda40;
+}
+
+.text-banner h3 {
+  font-family: 'Poppins';
+  font-size: 35px;
+}
+
+.box-banner {
+  background-image: url('./../../../public/BOX.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 10px;
+}
+
+.home-content {
+  background-color: #fafafa;
+}
+
+.ant-upload.ant-upload-select {
+  border: none !important;
+  background-color: #fafafa !important;
+}
+
+.use-guide {
+  background-color: #fafafa;
+  padding: 0px 200px 80px;
+}
+
+.use-guide_card {
+  border-radius: 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 30px;
+  background-color: #fff;
+  /* --- */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.use-guide_card .card {
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  padding: 20px;
+}
+
+.use-guide_card .card,
+.use-guide_card .description,
+.use-guide_card .ant-image {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card .title {
+  font-size: 24px;
+  line-height: 23px;
+  color: #080358;
+  font-family: 'Roboto';
+}
+
+.card .description {
+  font-size: 17px;
+  line-height: 27px;
+  font-weight: regular;
+  color: #9f9f9f;
+  font-family: 'Poppins';
+}
+
+.ant-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.ant-input-affix-wrapper {
+  background-color: #e4e4e4;
+  background: #e4e4e4;
+}
+
+.ant-input-affix-wrapper:focus {
+  background-color: #e4e4e4;
+  background: #e4e4e4;
+}
+
+.btn-submit button {
+  background: #ffa62d;
+  font-size: 30px;
+  padding: 30px 50px;
+}
+
+.tag-step {
+  background-color: #074691;
+  height: 100px;
+  z-index: 1;
+  padding: 10px 15px;
+}
+
+.tag-step p {
+  margin: 0;
+  font-family: 'Roboto';
+  font-size: 16px;
+}
+
+.tag-step h5 {
+  margin: 0;
+  font-size: 36px;
+  font-family: 'Roboto';
+}
+
+.tag-step::after {
+  content: "";
+  position: absolute;
+  bottom: -35px;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 40px 40px 0;
+  border-color: transparent #074691 transparent transparent;
+}
+
+.tag-step::before {
+  content: "";
+  position: absolute;
+  bottom: -35px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 40px 40px 0 0;
+  border-color: #074691 transparent transparent transparent;
+}
+
+@media screen and (max-width: 1200px) {
+  .use-guide {
+    padding: 0px 100px 80px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .use-guide {
+    padding: 0px 50px 80px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .use-guide {
+    padding: 0px 30px 80px;
+  }
+
+  .use-guide_card {
+    padding: 15px;
+  }
+
+  .use-guide_card .card {
+    padding: 15px;
+  }
+
+  .text-banner h1,
+  .text-banner h2 {
+    font-size: 30px;
+  }
+
+  .text-banner h3 {
+    font-size: 20px;
+  }
+
+  .btn-submit button {
+    font-size: 18px;
+    padding: 20px 30px;
+  }
+
+  .tag-step {
+    height: 70px;
+    padding: 5px 10px;
+  }
+
+  .tag-step p {
+    margin: 0;
+    font-family: 'Roboto';
+    font-size: 14px;
+  }
+
+  .tag-step h5 {
+    margin: 0;
+    font-size: 24px;
+    font-family: 'Roboto';
+  }
+
+  .tag-step::after {
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 30px 30px 0;
+    border-color: transparent #074691 transparent transparent;
+  }
+
+  .tag-step::before {
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 30px 30px 0 0;
+    border-color: #074691 transparent transparent transparent;
+  }
+
 }

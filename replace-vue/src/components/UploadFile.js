@@ -84,11 +84,7 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 100 }) => {
                {fileList.length < maxCount && fileList.length === 0 && (
                   <div className="d-flex justify-center items-center flex-column">
                      <p>
-                        <img
-                           className="has-mask h-10 object-center"
-                           src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
-                           alt=""
-                        />
+                        <img className="has-mask h-10 object-center" src="thumbnail.png" alt="" />
                      </p>
                      <p className="text-xl font-bold mb-0 fw-bold">Choose a file or drag & drop it here</p>
                      <p className="text-gray-500">Supported formats: .jpeg, .jpg, .png</p>
@@ -125,7 +121,7 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 100 }) => {
                   <div className="d-flex justify-center items-center">
                      <img
                         className="w-100 has-mask h-100 object-center"
-                        src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
+                        src="thumbnail.png"
                         alt=""
                         style={{ minHeight: "400px", minWidth: "400px", width: "100%" }}
                      />
