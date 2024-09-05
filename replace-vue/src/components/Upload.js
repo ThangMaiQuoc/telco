@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import "tailwindcss/tailwind.css";
 import UploadBasic from "./UploadFile";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message, Row, Col, Image } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { PhoneFilled, UserOutlined } from "@ant-design/icons";
+import "../assets/css/upload.css";
+
+// - Register as a user on the platform and complete the specified a
+// - Take a screenshot of the personal account page on either the client’s mobile device or PC to prove that the actions have been completed.
+// - Fill in the client’s username and phone number  on our webpage, and upload the screenshot.
+// - Click the submit button to complete the process.
 
 const UploadForm = () => {
    const [fileList, setFileList] = useState([]);
@@ -60,80 +66,151 @@ const UploadForm = () => {
                ? "Unknown phone number"
                : error?.response?.data?.title === "NO_IMAGE"
                ? "No image uploaded"
-               : "Username already exists",
-            5
+               : "Username already exists"
          );
       }
    };
 
+   const dataStep = [
+      {
+         title: "Register",
+         description: "Register as a user on the platform and complete the specified actions.",
+         image: "step1.png",
+      },
+      {
+         title: "Take a screenshot",
+         description:
+            "Take a screenshot of the personal account page on either the client’s mobile device or PC to prove that the actions have been completed.",
+         image: "step2.png",
+      },
+      {
+         title: "Submit Proof ",
+         description: " Fill in the client’s username and phone number  on our webpage, and upload the screenshot.",
+         image: "step3.png",
+      },
+      {
+         title: "Submit Your Application",
+         description: "Click the submit button to complete the process.",
+         image: "step4.png",
+      },
+   ];
+
    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 min-vh-100">
-         {/* <div>
-            <span className="text-sm">Drag and drop</span> files here <br /> or
-         </div> */}
-
-         <div className="bg-white p-10 rounded-lg shadow-lg max-w-md w-full min-vh-100">
-            <div className="text-center">
-               <h2 className="pt-4 text-3xl font-bold text-gray-900">Get Your Bonus</h2>
-               <p className="mt-2 text-sm text-gray-400">Charge 50P Get 50 Fee.</p>
+      <>
+         <div style={{ minHeight: "100vh" }}>
+            <div className="home-background">
+               <div className="bg-path"></div>
+               <div className="bg-cloud"></div>
+               <div className="content-banner d-flex flex-column flex-xl-row align-items-start justify-content-center">
+                  <div className="text-banner w-100">
+                     <h1 className="text-white fw-bold font-bold text-uppercase text-center">GET YOURS</h1>
+                     <h2 className="fw-bold font-bold text-uppercase text-center">BONUS</h2>
+                     <h3 className="text-white fw-medium font-medium text-center">Charge 50P Get 50 Fee.</h3>
+                  </div>
+                  <div className="box-banner w-100 h-100 mt-3 mt-lg-0 "></div>
+               </div>
             </div>
-            <Form form={form} onFinish={handleSubmit} className="mt-3  d-flex flex-column align-items-center">
-               <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-4 mb-3">
-                  <Form.Item
-                     className="mb-0"
-                     name="phoneNumber"
-                     // label="Phone Number"
-                     rules={[
-                        {
-                           required: true,
-                           message: "Please enter your phone number!",
-                        },
-                     ]}
-                  >
-                     <Input
-                        prefix={<PhoneFilled />}
-                        style={{ width: "300px" }}
-                        size="large"
-                        placeholder="Enter your phone number"
-                     />
-                  </Form.Item>
+            <div className="home-content pt-5 position-relative">
+               <div
+                  style={{
+                     height: "20px",
+                     background: "#fafafa",
+                     position: "absolute",
+                     inset: 0,
+                     zIndex: 1,
+                     top: "-10px",
+                  }}
+               ></div>
+               <Form form={form} onFinish={handleSubmit} className="d-flex flex-column align-items-center">
+                  <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-4 mb-3">
+                     <Form.Item
+                        className="mb-0"
+                        name="phoneNumber"
+                        rules={[
+                           {
+                              required: true,
+                              message: "Please enter your phone number!",
+                           },
+                        ]}
+                     >
+                        <Input
+                           styles={{ background: "#e4e4e4" }}
+                           prefix={<PhoneFilled />}
+                           style={{ width: "300px" }}
+                           size="large"
+                           placeholder="Enter your phone number"
+                        />
+                     </Form.Item>
 
-                  <Form.Item
-                     name="userName"
-                     className="mb-0"
-                     // label="Phone Number"
-                     rules={[
-                        {
-                           required: true,
-                           message: "Please enter your username!",
-                        },
-                     ]}
-                  >
-                     <Input
-                        prefix={<UserOutlined />}
-                        style={{ width: "300px" }}
-                        size="large"
-                        placeholder="Enter your username"
-                     />
-                  </Form.Item>
-               </div>
+                     <Form.Item
+                        name="userName"
+                        className="mb-0"
+                        // label="Phone Number"
+                        rules={[
+                           {
+                              required: true,
+                              message: "Please enter your username!",
+                           },
+                        ]}
+                     >
+                        <Input
+                           prefix={<UserOutlined />}
+                           style={{ width: "300px" }}
+                           size="large"
+                           placeholder="Enter your username"
+                        />
+                     </Form.Item>
+                  </div>
 
-               <div className="upload-basic">
-                  <UploadBasic setFileList={setFileList} fileList={fileList} />
-               </div>
-               {isUpload && <p style={{ color: "red" }}>Please choose picture</p>}
-               <div>
-                  <Button
-                     onClick={() => form.submit()}
-                     // type="submit"
-                     className="my-3 w-full flex justify-center bg-blue-500 text-gray-100 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-blue-600 shadow-lg cursor-pointer transition ease-in duration-300"
-                  >
-                     Get Started
-                  </Button>
-               </div>
-            </Form>
+                  <div className="upload-basic">
+                     <UploadBasic setFileList={setFileList} fileList={fileList} />
+                  </div>
+                  {isUpload && <p style={{ color: "red" }}>Please choose picture</p>}
+                  <div className="btn-submit">
+                     <Button
+                        onClick={() => form.submit()}
+                        className="my-3 w-full flex justify-center  text-white  tracking-wide  shadow-lg cursor-pointer transition ease-in duration-300 text-uppercase rounded-pill fw-bold"
+                     >
+                        Submit
+                     </Button>
+                  </div>
+               </Form>
+            </div>
+            <div className="use-guide ">
+               <Row className=" d-flex justify-content-center h-100">
+                  {dataStep.map((item, index) => (
+                     <>
+                        <Col xs={24} md={11} className="mt-5 position-relative">
+                           <div className="tag-step position-absolute top-0 end-0">
+                              <p className="fw-bold text-uppercase text-white">Step</p>
+                              <h5 className="text-white fw-bold text-center">0{index + 1}</h5>
+                           </div>
+                           <div className="use-guide_card  h-100">
+                              <div className="card  h-100" key={index}>
+                                 <div className="w-100 px-3 h-100">
+                                    <h3 className="title text-uppercase fw-bold mb-4">{item.title}</h3>
+                                    <div className="h-100 d-flex flex-direction align-items-center justify-content-center">
+                                       <Image
+                                          src={item.image}
+                                          preview={false}
+                                          style={{
+                                             width: "100%",
+                                             height: "auto",
+                                          }}
+                                       />
+                                    </div>
+                                 </div>
+                                 <div className="description text-center mt-2 mb-5">{item.description}</div>
+                              </div>
+                           </div>
+                        </Col>
+                        {index % 2 === 0 && <Col xs={0} md={1} />}
+                     </>
+                  ))}
+               </Row>
+            </div>
          </div>
-      </div>
+      </>
    );
 };
 
