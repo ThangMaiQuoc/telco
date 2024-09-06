@@ -267,6 +267,12 @@
   border-color: #074691 transparent transparent transparent;
 }
 
+.btn-submit button:hover {
+  background: rgb(233, 138, 4) !important;
+  /* color: #ffa62d !important; */
+  border: 1px solid transparent !important;
+}
+
 @media screen and (max-width: 1200px) {
   .use-guide {
     padding: 0px 100px 80px;
