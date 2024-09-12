@@ -4,10 +4,17 @@ import { CloudUploadOutlined } from "@ant-design/icons";
 import "tailwindcss/tailwind.css";
 import "../assets/css/upload.css";
 
-const UploadBasic = ({ fileList, setFileList, maxCount = 100 }) => {
+const UploadBasic = ({ fileList, setFileList, setIsUpload, maxCount = 100 }) => {
    const onChange = ({ fileList: newFileList }) => {
       setFileList(newFileList);
    };
+   // const normalizeFileName = (name) => {
+   //    return name
+   //       .normalize("NFD")
+   //       .replace(/[\u0300-\u036f]/g, "")
+   //       .replace(/đ/g, "d")
+   //       .replace(/Đ/g, "D");
+   // };
 
    const onPreview = async (file) => {
       let src = file.url;
@@ -27,6 +34,10 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 100 }) => {
    const customUpload = async (options) => {
       const { onSuccess, onError, file } = options;
 
+      // console.log("son file", file);
+      // let fileName = normalizeFileName(file.name);
+      // console.log("son fileName", fileName);
+
       const formData = new FormData();
       formData.append("file", file);
 
@@ -44,6 +55,7 @@ const UploadBasic = ({ fileList, setFileList, maxCount = 100 }) => {
             const responseData = await response.json();
             onSuccess(responseData, file);
             message.success("Upload successful!");
+            setIsUpload(false);
          } else {
             onError(new Error("Upload failed"));
             message.error("Upload failed. Please try again.");

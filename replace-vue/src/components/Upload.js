@@ -59,14 +59,18 @@ const UploadForm = () => {
             message.error("Image upload failed.", 5);
          }
       } catch (error) {
-         // console.error("Upload failed:", error?.response?.data?.title);
+         // console.error("Upload failed:", error);
          // alert("Upload failed.");
          message.error(
             error?.response?.data?.title === "Unknown_mobile"
                ? "Unknown phone number"
                : error?.response?.data?.title === "NO_IMAGE"
                ? "No image uploaded"
-               : "Username already exists"
+               : error?.response?.data?.title === "Phone is existed"
+               ? "Phone already exists"
+               : error?.response?.data?.title === "Username is existed"
+               ? "Username already exists"
+               : "Unknown error. Please try again"
          );
       }
    };
@@ -163,7 +167,7 @@ const UploadForm = () => {
                   </div>
 
                   <div className="upload-basic">
-                     <UploadBasic setFileList={setFileList} fileList={fileList} />
+                     <UploadBasic setFileList={setFileList} fileList={fileList} setIsUpload={setIsUpload} />
                   </div>
                   {isUpload && <p style={{ color: "red" }}>Please choose picture</p>}
                   <div className="btn-submit">
