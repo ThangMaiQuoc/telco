@@ -5,16 +5,30 @@ import "tailwindcss/tailwind.css";
 import "../assets/css/upload.css";
 
 const UploadBasic = ({ fileList, setFileList, setIsUpload, maxCount = 100 }) => {
-   const onChange = ({ fileList: newFileList }) => {
-      setFileList(newFileList);
+   const normalizeFileName = (name) => {
+      return name
+         .normalize("NFD") // Chuyển đổi thành dạng decomposed (phân tách dấu)
+         .replace(/[\u0300-\u036f]/g, "") // Xóa các dấu
+         .replace(/đ/g, "d") // Thay thế đ thành d
+         .replace(/Đ/g, "D") // Thay thế Đ thành D
+         .replace(/[^a-zA-Z0-9.]/g, "_"); // Thay thế ký tự đặc biệt thành dấu gạch dưới "_"
    };
-   // const normalizeFileName = (name) => {
-   //    return name
-   //       .normalize("NFD")
-   //       .replace(/[\u0300-\u036f]/g, "")
-   //       .replace(/đ/g, "d")
-   //       .replace(/Đ/g, "D");
-   // };
+   const onChange = ({ fileList: newFileList }) => {
+      setFileList(
+         newFileList.map((item) => {
+            const responsePath = item.response?.path || "";
+            const splitPath = responsePath.split("/").pop();
+            return {
+               uid: item.uid,
+               name: item.name,
+               status: item.status,
+               url: responsePath ? `http://47.236.52.161:8099/api/v1/consumer/public/logo/${splitPath}` : "",
+               thumbUrl: responsePath ? `http://47.236.52.161:8099/api/v1/consumer/public/logo/${splitPath}` : "",
+               response: item.response,
+            };
+         })
+      );
+   };
 
    const onPreview = async (file) => {
       let src = file.url;
@@ -34,26 +48,23 @@ const UploadBasic = ({ fileList, setFileList, setIsUpload, maxCount = 100 }) => 
    const customUpload = async (options) => {
       const { onSuccess, onError, file } = options;
 
-      // console.log("son file", file);
-      // let fileName = normalizeFileName(file.name);
-      // console.log("son fileName", fileName);
+      const newFileName = normalizeFileName(file.name);
+
+      const newFile = new File([file], newFileName, { type: file.type });
 
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", newFile);
 
       try {
          const response = await fetch("http://47.236.52.161:8099/api/v1/consumer/upload", {
             method: "POST",
             body: formData,
-            // headers: {
-            //    // "Content-Type": "multipart/form-data", // Commented out since fetch handles this automatically
-            //    Authorization: `Bearer ${localStorage.getItem("token")}`,
-            // },
          });
 
          if (response.ok) {
             const responseData = await response.json();
             onSuccess(responseData, file);
+
             message.success("Upload successful!");
             setIsUpload(false);
          } else {
