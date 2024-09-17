@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const AdminDashboard = () => {
    const [uploads, setUploads] = useState([]);
    const [spin, setSpin] = useState(false);
+   const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
 
    useEffect(() => {
@@ -208,6 +209,8 @@ const AdminDashboard = () => {
    };
 
    const handleUnApprove = async (id) => {
+      setLoading(true);
+
       try {
          const token = localStorage.getItem("adminToken");
          // Gửi yêu cầu PUT để thay đổi trạng thái
@@ -227,12 +230,15 @@ const AdminDashboard = () => {
             },
          });
          setUploads(response.data);
+         setLoading(false);
       } catch (error) {
+         setLoading(false);
          console.error("Error approving upload:", error);
       }
    };
 
    const handleApprove = async (id) => {
+      setLoading(true);
       try {
          const token = localStorage.getItem("adminToken");
          // Gửi yêu cầu PUT để thay đổi trạng thái
@@ -252,8 +258,10 @@ const AdminDashboard = () => {
             },
          });
          setUploads(response.data);
+         setLoading(false);
       } catch (error) {
          console.error("Error approving upload:", error);
+         setLoading(false);
       }
    };
 
@@ -433,6 +441,7 @@ const AdminDashboard = () => {
                         <div className="flex space-x-2">
                            <Button
                               type="text"
+                              loading={loading}
                               onClick={() => handleApprove(record.id)}
                               style={{ color: "#22c55e", fontWeight: 600 }}
                            >
@@ -443,6 +452,7 @@ const AdminDashboard = () => {
                         <div className="flex space-x-2 bg-green-500">
                            <Button
                               // className="text-warning"
+                              loading={loading}
                               type="text"
                               danger
                               onClick={() => handleUnApprove(record.id)}
