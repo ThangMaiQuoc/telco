@@ -34,7 +34,7 @@ const UploadForm = () => {
                .join(",");
 
             const imageBonusResponse = await axios.post(
-               "http://47.236.52.161:8099/api/v1/consumer/upload/image-bonus",
+               `${process.env.REACT_APP_API_PUBLIC}/api/v1/consumer/upload/image-bonus`,
                {
                   phone: values.phoneNumber,
                   image: uploadedImagePath,

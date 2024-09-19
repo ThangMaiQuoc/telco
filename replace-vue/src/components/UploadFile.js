@@ -22,8 +22,10 @@ const UploadBasic = ({ fileList, setFileList, setIsUpload, maxCount = 100 }) => 
                uid: item.uid,
                name: item.name,
                status: item.status,
-               url: responsePath ? `http://47.236.52.161:8099/api/v1/consumer/public/logo/${splitPath}` : "",
-               thumbUrl: responsePath ? `http://47.236.52.161:8099/api/v1/consumer/public/logo/${splitPath}` : "",
+               url: responsePath ? `${process.env.REACT_APP_API_PUBLIC}/api/v1/consumer/public/logo/${splitPath}` : "",
+               thumbUrl: responsePath
+                  ? `${process.env.REACT_APP_API_PUBLIC}/api/v1/consumer/public/logo/${splitPath}`
+                  : "",
                response: item.response,
             };
          })
@@ -56,7 +58,7 @@ const UploadBasic = ({ fileList, setFileList, setIsUpload, maxCount = 100 }) => 
       formData.append("file", newFile);
 
       try {
-         const response = await fetch("http://47.236.52.161:8099/api/v1/consumer/upload", {
+         const response = await fetch(`${process.env.REACT_APP_API_PUBLIC}/api/v1/consumer/upload`, {
             method: "POST",
             body: formData,
          });

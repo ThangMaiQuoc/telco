@@ -25,11 +25,14 @@ const AdminDashboard = () => {
          setSpin(true);
          try {
             const token = localStorage.getItem("adminToken");
-            const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            });
+            const response = await axios.get(
+               `${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/information?size=1000`,
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               }
+            );
             // const sortedData = response.data.sort((a, b) => {
             //    if (a.status === "WAITING_FOR_APPROVED" && b.status !== "WAITING_FOR_APPROVED") {
             //       return -1;
@@ -215,7 +218,7 @@ const AdminDashboard = () => {
          const token = localStorage.getItem("adminToken");
          // Gửi yêu cầu PUT để thay đổi trạng thái
          await axios.put(
-            `http://47.236.52.161:8099/api/v1/admin/upload/${id}/REJECTED`,
+            `${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/${id}/REJECTED`,
             {},
             {
                headers: {
@@ -224,11 +227,14 @@ const AdminDashboard = () => {
             }
          );
          // Làm mới dữ liệu sau khi cập nhật
-         const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
+         const response = await axios.get(
+            `${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/information?size=1000`,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
+         );
          setUploads(response.data);
          setLoading(false);
       } catch (error) {
@@ -243,7 +249,7 @@ const AdminDashboard = () => {
          const token = localStorage.getItem("adminToken");
          // Gửi yêu cầu PUT để thay đổi trạng thái
          await axios.put(
-            `http://47.236.52.161:8099/api/v1/admin/upload/${id}/APPROVED`,
+            `${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/${id}/APPROVED`,
             {},
             {
                headers: {
@@ -252,11 +258,14 @@ const AdminDashboard = () => {
             }
          );
          // Làm mới dữ liệu sau khi cập nhật
-         const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
+         const response = await axios.get(
+            `${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/information?size=1000`,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
+         );
          setUploads(response.data);
          setLoading(false);
       } catch (error) {
@@ -278,7 +287,7 @@ const AdminDashboard = () => {
    //       const token = localStorage.getItem("adminToken");
    //       // Gửi yêu cầu PUT để thay đổi trạng thái
    //       await axios.put(
-   //          `http://47.236.52.161:8099/api/v1/admin/upload/${id}/${status}`,
+   //          `${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/${id}/${status}`,
    //          {},
    //          {
    //             headers: {
@@ -287,7 +296,7 @@ const AdminDashboard = () => {
    //          }
    //       );
    //       // Làm mới dữ liệu sau khi cập nhật
-   //       const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
+   //       const response = await axios.get("${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/information?size=1000", {
    //          headers: {
    //             Authorization: `Bearer ${token}`,
    //          },
@@ -307,7 +316,7 @@ const AdminDashboard = () => {
    //       const token = localStorage.getItem("adminToken");
    //       // Gửi yêu cầu PUT để thay đổi trạng thái
    //       await axios.put(
-   //          `http://47.236.52.161:8099/api/v1/admin/upload/review/${id}/${status}`,
+   //          `${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/review/${id}/${status}`,
    //          {},
    //          {
    //             headers: {
@@ -316,7 +325,7 @@ const AdminDashboard = () => {
    //          }
    //       );
    //       // Làm mới dữ liệu sau khi cập nhật
-   //       const response = await axios.get("http://47.236.52.161:8099/api/v1/admin/upload/information?size=1000", {
+   //       const response = await axios.get("${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/upload/information?size=1000", {
    //          headers: {
    //             Authorization: `Bearer ${token}`,
    //          },
@@ -382,7 +391,7 @@ const AdminDashboard = () => {
                   <Image
                      width={80}
                      height={80}
-                     src={`http://47.236.52.161:8099/api/v1/consumer/public/logo/${imageArray[0]}`}
+                     src={`${process.env.REACT_APP_API_PUBLIC}/api/v1/consumer/public/logo/${imageArray[0]}`}
                      alt="Image title"
                      className="w-20 h-20 object-cover rounded-lg"
                   />
@@ -390,7 +399,7 @@ const AdminDashboard = () => {
                   {imageArray.slice(1).map((img, index) => (
                      <Image
                         key={index}
-                        src={`http://47.236.52.161:8099/api/v1/consumer/public/logo/${img}`}
+                        src={`${process.env.REACT_APP_API_PUBLIC}/api/v1/consumer/public/logo/${img}`}
                         alt={`Image ${index + 2}`}
                         style={{ display: "none" }} // Ẩn các hình ảnh này khỏi hiển thị ban đầu
                      />
