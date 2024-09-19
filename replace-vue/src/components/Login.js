@@ -18,7 +18,7 @@ const Login = () => {
       // event.preventDefault();
       setLoading(true); // Bắt đầu quá trình tải dữ liệu
       try {
-         const response = await axios.post("http://47.236.52.161:8099/api/v1/consumer/authenticate", {
+         const response = await axios.post(`${process.env.REACT_APP_API_PUBLIC}/api/v1/consumer/authenticate`, {
             username: values.email,
             password: values.password,
          });

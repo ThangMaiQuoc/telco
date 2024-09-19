@@ -15,7 +15,7 @@ const AdminLogin = () => {
    const handleSubmit = async (values) => {
       // event.preventDefault();
       try {
-         const response = await axios.post("http://47.236.52.161:8099/api/v1/admin/authenticate", {
+         const response = await axios.post(`${process.env.REACT_APP_API_PUBLIC}/api/v1/admin/authenticate`, {
             username: values.email,
             password: values.password,
          });
