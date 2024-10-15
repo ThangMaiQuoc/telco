@@ -18,13 +18,13 @@ const UploadForm = () => {
 
    const [form] = useForm();
 
-   const dataUser = JSON.parse(localStorage.getItem("dataUser"));
-   useEffect(() => {
-      form.setFieldsValue({
-         phoneNumber: dataUser?.phone,
-         userName: dataUser?.userName,
-      });
-   }, [dataUser, form]);
+   // const dataUser = JSON.parse(localStorage.getItem("dataUser"));
+   // useEffect(() => {
+   //    form.setFieldsValue({
+   //       phoneNumber: dataUser?.phone,
+   //       userName: dataUser?.userName,
+   //    });
+   // }, [dataUser, form]);
 
    const handleSubmit = async (values) => {
       if (!fileList || fileList.length < 1) {

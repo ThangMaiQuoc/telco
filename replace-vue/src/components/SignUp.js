@@ -38,13 +38,13 @@ const SignUp = () => {
       );
       if (response.status === 200) {
          message.success("Successfully!");
-         localStorage.setItem(
-            "dataUser",
-            JSON.stringify({
-               phone: response?.data?.phone || values.phone,
-               userName: response?.data?.userName || values.username,
-            })
-         );
+         // localStorage.setItem(
+         //    "dataUser",
+         //    JSON.stringify({
+         //       phone: response?.data?.phone || values.phone,
+         //       userName: response?.data?.userName || values.username,
+         //    })
+         // );
          navigate("/use-guide");
       }
    };
