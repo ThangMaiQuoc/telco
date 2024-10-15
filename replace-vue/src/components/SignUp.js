@@ -1,11 +1,29 @@
 import { Card, Row, Col, Typography, Form, Input, Button, message } from "antd";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
    const [form] = Form.useForm();
    const navigate = useNavigate();
+
+   const [windowSize, setWindowSize] = useState({
+      width: window.innerWidth,
+      height: window.innerHeight,
+   });
+
+   // Cập nhật kích thước màn hình khi thay đổi
+   useEffect(() => {
+      const handleResize = () => {
+         setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight,
+         });
+      };
+
+      // Gỡ sự kiện khi component bị hủy
+      return () => window.removeEventListener("resize", handleResize);
+   }, []);
 
    const onFinish = async (values) => {
       const response = await axios.post(
@@ -20,18 +38,40 @@ const SignUp = () => {
       );
       if (response.status === 200) {
          message.success("Successfully!");
-         localStorage.setItem("dataUser", {
-            phone: response?.data?.phone || values.phone,
-            userName: response?.data?.userName || values.username,
-         });
+         localStorage.setItem(
+            "dataUser",
+            JSON.stringify({
+               phone: response?.data?.phone || values.phone,
+               userName: response?.data?.userName || values.username,
+            })
+         );
          navigate("/use-guide");
       }
    };
    return (
-      <Card style={{ minHeight: "100vh" }}>
+      <Card
+         style={
+            windowSize.width > 500
+               ? {
+                    minHeight: "100vh",
+                    backgroundImage: "url(dashboard_login.png)",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                 }
+               : {
+                    minHeight: "100vh",
+                 }
+         }
+      >
          <Row>
-            <Col xs={0} md={7}></Col>
-            <Col xs={24} md={10}>
+            <Col xs={0} md={6} xl={8}></Col>
+            <Col
+               xs={24}
+               md={12}
+               xl={8}
+               style={windowSize.width > 500 ? { background: "#fff", padding: "24px", borderRadius: "8px" } : {}}
+            >
                <div style={{ display: "flex", justifyContent: "center" }}>
                   <img
                      className="w-25 has-mask h-25 object-center"
@@ -65,7 +105,16 @@ const SignUp = () => {
                   <Form.Item name="phone" rules={[{ required: true, message: "Please enter your phone number" }]}>
                      <Input style={{ height: "42px" }} placeholder="Phone number" />
                   </Form.Item>
-                  <Form.Item name={"email"} rules={[{ required: true, message: "Please enter your email" }]}>
+                  <Form.Item
+                     name={"email"}
+                     rules={[
+                        { required: true, message: "Please enter your email" },
+                        {
+                           type: "email",
+                           message: "The input is not valid E-mail!",
+                        },
+                     ]}
+                  >
                      <Input style={{ height: "42px" }} placeholder="Email" />
                   </Form.Item>
                   <Typography style={{ fontWeight: 700, marginBottom: "16px" }}>
@@ -81,7 +130,7 @@ const SignUp = () => {
                <Typography style={{ fontSize: "16px", marginBottom: "16px" }}>Thanks,</Typography>
                <Typography style={{ fontSize: "16px", fontWeight: 700 }}>ET4M team</Typography>
             </Col>
-            <Col xs={0} md={7}></Col>
+            <Col xs={0} md={6} xl={8}></Col>
          </Row>
       </Card>
    );

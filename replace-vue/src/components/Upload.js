@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "tailwindcss/tailwind.css";
 import UploadBasic from "./UploadFile";
@@ -17,6 +17,14 @@ const UploadForm = () => {
    const [isUpload, setIsUpload] = useState(false);
 
    const [form] = useForm();
+
+   const dataUser = JSON.parse(localStorage.getItem("dataUser"));
+   useEffect(() => {
+      form.setFieldsValue({
+         phoneNumber: dataUser?.phone,
+         userName: dataUser?.userName,
+      });
+   }, [dataUser, form]);
 
    const handleSubmit = async (values) => {
       if (!fileList || fileList.length < 1) {
@@ -106,10 +114,17 @@ const UploadForm = () => {
                <div className="bg-path"></div>
                <div className="bg-cloud"></div>
                <div className="content-banner d-flex flex-column flex-xl-row align-items-start justify-content-center">
-                  <div className="text-banner w-100">
+                  {/* <div className="text-banner w-100">
                      <h1 className="text-white fw-bold font-bold text-uppercase text-center">GET YOURS</h1>
                      <h2 className="fw-bold font-bold text-uppercase text-center">BONUS</h2>
                      <h3 className="text-white fw-medium font-medium text-center">Charge 50P Get 50 Fee.</h3>
+                  </div> */}
+                  <div class="text-banner w-100 d-flex flex-column align-items-center justify-content-start">
+                     <div>
+                        <h1 class="text-white fw-bold font-bold text-uppercase ">GET</h1>
+                        <h1 class="text-white fw-bold font-bold text-uppercase ">YOURS</h1>
+                        <h2 class="fw-bold font-bold text-uppercase ">BONUS</h2>
+                     </div>
                   </div>
                   <div className="box-banner w-100 h-100 mt-3 mt-lg-0 "></div>
                </div>
