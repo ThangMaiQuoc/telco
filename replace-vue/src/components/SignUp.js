@@ -119,7 +119,7 @@ const SignUp = () => {
                   </Form.Item>
                   <Typography style={{ fontWeight: 700, marginBottom: "16px" }}>
                      Thanks for signing up and completing your first task.
-                     <br /> We'll sent you P20 money and an invite to get started soon!
+                     <br /> We'll sent you P20 for finishing the registration task.
                   </Typography>
                   <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
                      <Button htmlType="submit" type="primary">
